@@ -1,0 +1,291 @@
+mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: white !important;
+    color: var(--text-color) !important;
+    padding: 0 5% 0 2% !important;
+    height: 70px !important;
+    transition: all 0.3s ease;
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    padding: 8px 0;
+}
+
+.brand-container:hover {
+    transform: translateY(-1px);
+}
+
+.brand-logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(20, 184, 166, 0.3));
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1;
+}
+
+.brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    color: var(--primary-color);
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Outfit', sans-serif;
+}
+
+.brand-slogan {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.2px;
+    margin-top: 2px;
+    opacity: 0.9;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    font-weight: 600;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px 0;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--brand-gradient);
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a.active {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    border-left: 1px solid #eee;
+    margin-left: 0.5rem;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 6px !important;
+    border-radius: 30px !important;
+    height: auto !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.profile-trigger:hover {
+    background: transparent;
+    opacity: 0.8;
+}
+
+.profile-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(110, 142, 251, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+}
+
+.user-email-small {
+    font-size: 0.75rem;
+    color: #888;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-icon {
+    width: 20px;
+    height: 20px;
+    color: #888;
+    margin-left: -5px;
+    transition: transform 0.2s ease;
+}
+
+.profile-trigger[aria-expanded="true"] .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+/* Modern Menu Styles applied globally to the panel class */
+::ng-deep .modern-menu {
+    border-radius: 12px !important;
+    margin-top: 10px;
+    min-width: 240px !important;
+    max-width: 280px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden !important;
+}
+
+::ng-deep .modern-menu .menu-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(to bottom, #fdfdfd, #f8f9fa);
+}
+
+::ng-deep .modern-menu .menu-avatar-large {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    box-shadow: 0 5px 15px rgba(110, 142, 251, 0.3);
+    border: 3px solid white;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+::ng-deep .modern-menu .menu-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+::ng-deep .modern-menu .menu-name {
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+::ng-deep .modern-menu .menu-email {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 4px;
+    max-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+::ng-deep .modern-menu .logout-menu-item {
+    height: 48px !important;
+    margin: 4px 8px;
+    width: calc(100% - 16px) !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+}
+
+::ng-deep .modern-menu .menu-item {
+    height: 48px !important;
+    margin: 4px 8px;
+    width: calc(100% - 16px) !important;
+    border-radius: 8px !important;
+}
+
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    color: #666;
+    margin-right: 12px;
+}
+
+.logout-icon {
+    margin-right: 12px;
+}
+
+::ng-deep .modern-menu .logout-text {
+    font-weight: 600;
+    color: #d32f2f;
+}
+
+.login-btn {
+    font-weight: 600;
+}
+
+.signup-btn {
+    border-radius: 20px !important;
+    padding: 0 1.5rem !important;
+    font-weight: 600 !important;
+}

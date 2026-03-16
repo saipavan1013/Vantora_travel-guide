@@ -1,0 +1,152 @@
+<div class="page">
+
+  <!-- ───────── full-scene SVG ───────── -->
+  <svg class="scene" viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- White page background -->
+    <rect width="900" height="550" fill="#ffffff"/>
+
+    <!-- Large soft lavender bubble that contains everything -->
+    <path fill="#e6eeff"
+      d="M130,55 C70,30 20,90 18,155 C16,220 50,265 35,330
+         C18,400 -5,460 40,505 C90,555 175,540 270,542
+         C400,545 530,548 660,535 C775,522 880,500 890,420
+         C900,345 855,290 868,210 C882,125 870,55 790,30
+         C710,5 650,38 560,22 C465,5 370,-10 280,12
+         C210,28 185,78 130,55Z"/>
+
+    <!-- ── Clouds (upper-right) ── -->
+    <g>
+      <ellipse cx="690" cy="85" rx="35" ry="17" fill="white"/>
+      <ellipse cx="668" cy="93" rx="22" ry="16" fill="white"/>
+      <ellipse cx="715" cy="94" rx="22" ry="15" fill="white"/>
+    </g>
+    <g>
+      <ellipse cx="780" cy="60" rx="26" ry="13" fill="white"/>
+      <ellipse cx="760" cy="67" rx="17" ry="12" fill="white"/>
+      <ellipse cx="800" cy="67" rx="17" ry="12" fill="white"/>
+    </g>
+
+    <!-- ── Ground hills ── -->
+    <!-- left hill -->
+    <ellipse cx="170" cy="490" rx="205" ry="110" fill="#aabcf0"/>
+    <!-- right hill -->
+    <ellipse cx="770" cy="500" rx="185" ry="100" fill="#aabcf0"/>
+    <!-- centre strip -->
+    <ellipse cx="460" cy="528" rx="310" ry="68" fill="#beccf5" opacity="0.7"/>
+
+    <!-- ── Plants · left hill ── -->
+    <g transform="translate(60,418)">
+      <path d="M0,0 Q-12,-38 0,-72 Q12,-38 0,0" fill="#7b9af0" transform="rotate(-22)"/>
+      <path d="M0,0 Q14,-35 2,-66 Q-8,-35 0,0" fill="#8faef8" transform="rotate(18)"/>
+      <path d="M0,0 Q-10,-48 0,-88 Q10,-48 0,0" fill="#6b8bde" transform="rotate(-50)"/>
+      <path d="M10,3 Q22,-28 12,-58 Q2,-28 10,3" fill="#9ab5ff" transform="rotate(38)"/>
+    </g>
+    <!-- ── Plants · right side ── -->
+    <g transform="translate(840,415)">
+      <path d="M0,0 Q12,-40 0,-76 Q-12,-40 0,0" fill="#7b9af0" transform="rotate(22)"/>
+      <path d="M0,0 Q-15,-36 0,-68 Q10,-36 0,0" fill="#8faef8" transform="rotate(-18)"/>
+      <path d="M0,0 Q10,-48 0,-88 Q-10,-48 0,0" fill="#6b8bde" transform="rotate(48)"/>
+      <path d="M-8,3 Q-22,-28 -12,-56 Q2,-28 -8,3" fill="#9ab5ff" transform="rotate(-36)"/>
+    </g>
+    <!-- ── Plants · center-right of left hill ── -->
+    <g transform="translate(248,445)">
+      <path d="M0,0 Q-8,-26 0,-50 Q8,-26 0,0" fill="#7b9af0" transform="rotate(-18)"/>
+      <path d="M0,0 Q9,-23 2,-46 Q-6,-23 0,0" fill="#8faef8" transform="rotate(22)"/>
+    </g>
+    <!-- ── Plants · center-left of right hill ── -->
+    <g transform="translate(628,438)">
+      <path d="M0,0 Q-8,-28 0,-52 Q8,-28 0,0" fill="#7b9af0" transform="rotate(-12)"/>
+      <path d="M0,0 Q9,-24 2,-48 Q-6,-24 0,0" fill="#6b8bde" transform="rotate(26)"/>
+    </g>
+
+    <!-- ═══════════════════════════════════════
+         TRAVELLER — back-facing, map in hands
+         Origin = (545, 108)
+         ═══════════════════════════════════════ -->
+    <g transform="translate(545,108)">
+
+      <!-- Open map (two panels, slightly fanned) -->
+      <!-- Left panel -->
+      <g transform="rotate(-8) translate(-70,132)">
+        <rect width="60" height="82" rx="3" fill="#b4d8f5"/>
+        <rect width="60" height="82" rx="3" fill="none" stroke="#85bbdf" stroke-width="1.2"/>
+        <line x1="30" y1="0" x2="30" y2="82" stroke="#85bbdf" stroke-width="0.8"/>
+        <line x1="0" y1="41" x2="60" y2="41" stroke="#85bbdf" stroke-width="0.8"/>
+        <line x1="6" y1="18" x2="24" y2="18" stroke="#9ecde8" stroke-width="0.8"/>
+        <line x1="6" y1="28" x2="20" y2="28" stroke="#9ecde8" stroke-width="0.8"/>
+      </g>
+      <!-- Right panel -->
+      <g transform="rotate(5) translate(-12,130)">
+        <rect width="60" height="82" rx="3" fill="#cce8f8"/>
+        <rect width="60" height="82" rx="3" fill="none" stroke="#85bbdf" stroke-width="1.2"/>
+        <line x1="30" y1="0" x2="30" y2="82" stroke="#85bbdf" stroke-width="0.8"/>
+        <line x1="0" y1="41" x2="60" y2="41" stroke="#85bbdf" stroke-width="0.8"/>
+      </g>
+
+      <!-- Left arm reaching forward -->
+      <path d="M-20,110 Q-45,132 -56,162" stroke="#e6a87a" stroke-width="12"
+            stroke-linecap="round" fill="none"/>
+      <!-- Right arm reaching forward -->
+      <path d="M20,110 Q25,135 14,168" stroke="#e6a87a" stroke-width="12"
+            stroke-linecap="round" fill="none"/>
+
+      <!-- Torso · light beige sleeveless top -->
+      <path d="M-24,97 Q-30,152 -24,192 L24,192 Q30,152 24,97
+               Q12,87 0,87 Q-12,87 -24,97Z" fill="#f2b89e"/>
+
+      <!-- Backpack (dark indigo-blue) -->
+      <rect x="10" y="90" width="44" height="74" rx="10" fill="#4a5fc4"/>
+      <!-- Top flap -->
+      <rect x="10" y="86" width="44" height="20" rx="8" fill="#3a4db4"/>
+      <!-- Left shoulder strap -->
+      <path d="M10,96 Q-5,118 -8,148" stroke="#2d3e98" stroke-width="6"
+            stroke-linecap="round" fill="none"/>
+      <!-- Centre seam / pocket -->
+      <rect x="16" y="136" width="32" height="22" rx="5" fill="#3a4db4"/>
+      <line x1="32" y1="100" x2="32" y2="158" stroke="#3a4db4" stroke-width="2.5" opacity="0.6"/>
+
+      <!-- Head -->
+      <circle cx="0" cy="52" r="28" fill="#e6a87a"/>
+
+      <!-- Hair covering crown (red-auburn) -->
+      <path d="M-28,54 Q-27,16 0,14 Q27,12 28,54
+               C25,40 16,30 0,28 C-16,30 -25,40 -28,54Z" fill="#be3f1c"/>
+      <path d="M-21,29 Q0,8 21,29 Q10,17 0,15 Q-10,17 -21,29Z" fill="#be3f1c"/>
+
+      <!-- Bun (right-back of head) -->
+      <circle cx="9" cy="21" r="13" fill="#d04820"/>
+      <circle cx="9" cy="21" r="9"  fill="#be3f1c"/>
+      <!-- Strand wrapping bun -->
+      <path d="M-1,12 Q9,5 19,12" stroke="#be3f1c" stroke-width="3"
+            fill="none" stroke-linecap="round"/>
+
+      <!-- Neck -->
+      <rect x="-9" y="77" width="18" height="14" rx="5" fill="#e6a87a"/>
+
+      <!-- Shorts (dark navy) -->
+      <path d="M-24,190 L-26,234 L-7,234 Q-2,216 0,207
+               Q2,216 7,234 L26,234 L24,190Z" fill="#1c2b5a"/>
+
+      <!-- Legs (skin) -->
+      <rect x="-22" y="232" width="13" height="64" rx="6" fill="#e6a87a"/>
+      <rect x="9"   y="232" width="13" height="64" rx="6" fill="#e6a87a"/>
+
+      <!-- Dark ankle boots -->
+      <path d="M-22,294 Q-26,304 -30,312 Q-28,320 -11,320
+               Q-7,312 -9,294Z" fill="#22223a"/>
+      <path d="M22,294 Q26,304 30,312 Q28,320 11,320
+               Q7,312 9,294Z" fill="#22223a"/>
+
+    </g><!-- end traveller -->
+
+  </svg>
+
+  <!-- ── Text + button rendered as normal HTML on top ── -->
+  <div class="overlay">
+    <h1 class="code">404</h1>
+    <p class="label">PAGE NOT FOUND</p>
+    <a routerLink="/" class="btn">GO TO HOME</a>
+  </div>
+
+</div>

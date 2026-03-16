@@ -1,0 +1,173 @@
+<div class="planner-page-container">
+    <!-- Trip List View -->
+    <div *ngIf="viewMode === 'list'" class="trip-list-container">
+        <div class="header-row">
+            <h1 class="page-title">My Trips</h1>
+            <button mat-raised-button color="primary" class="btn-create" (click)="createNewTrip()">
+                <mat-icon>add</mat-icon> Plan a New Trip
+            </button>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="trips.length === 0" class="empty-list glass-card">
+            <div class="empty-icon-wrapper">
+                <mat-icon>explore</mat-icon>
+            </div>
+            <h2>No trips planned yet.</h2>
+            <p>Start planning your next adventure today!</p>
+            <button mat-raised-button color="primary" (click)="createNewTrip()">
+                <mat-icon>add</mat-icon> Create Trip
+            </button>
+        </div>
+
+        <!-- Trip Grid -->
+        <div class="trip-grid" *ngIf="trips.length > 0">
+            <mat-card *ngFor="let trip of trips" class="trip-card glass-card">
+                <div class="card-image-wrapper" (click)="selectTrip(trip)">
+                    <img [src]="trip.imageUrl || trip.destinations[0]?.imageUrl || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800'"
+                        alt="Destination" class="trip-image">
+                    <div class="trip-status-badge" [ngClass]="trip.status.toLowerCase()">{{ trip.status }}</div>
+                </div>
+
+                <mat-card-content (click)="selectTrip(trip)">
+                    <div class="card-header">
+                        <h3>{{ trip.title }}</h3>
+                        <div class="budget-badge">
+                            <span class="total">{{ trip.budget | currency:'USD':'symbol':'1.0-0' }}</span>
+                            <span class="divider"></span>
+                            <span class="per-person">{{ (trip.budget / trip.travelers) | currency:'USD':'symbol':'1.0-0'
+                                }}/pp</span>
+                        </div>
+                    </div>
+
+                    <div class="trip-details">
+                        <div class="detail-item">
+                            <mat-icon>place</mat-icon>
+                            <span>{{ trip.destination }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>calendar_today</mat-icon>
+                            <span>{{ trip.startDate | date:'MMM d' }} - {{ trip.endDate | date:'MMM d, y' }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <mat-icon>group</mat-icon>
+                            <span>{{ trip.travelers }} {{ trip.travelers === 1 ? 'Traveler' : 'Travelers' }}</span>
+                        </div>
+                    </div>
+                </mat-card-content>
+
+                <mat-card-actions align="end">
+                    <button mat-button color="primary" (click)="selectTrip(trip)">
+                        <mat-icon>visibility</mat-icon> View
+                    </button>
+                    <button mat-button color="accent" (click)="editTrip(trip)">
+                        <mat-icon>edit</mat-icon> Edit
+                    </button>
+                    <button mat-button color="warn" (click)="deleteTrip(trip.id!)">
+                        <mat-icon>delete</mat-icon> Delete
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- Create/Edit Trip Form -->
+    <div *ngIf="viewMode === 'create' || viewMode === 'edit'" class="form-view">
+        <div class="form-container glass-card">
+            <h2 class="form-title">{{ viewMode === 'edit' ? 'Edit' : 'Plan' }} Your Trip</h2>
+            <app-trip-form [trip]="activeTrip || undefined" (save)="onTripSave($event)"
+                (cancel)="viewMode = 'list'"></app-trip-form>
+        </div>
+    </div>
+
+    <!-- Trip Dashboard View -->
+    <div *ngIf="viewMode === 'dashboard' && activeTrip" class="dashboard-view">
+        <div class="dashboard-header-bar">
+            <button mat-button (click)="viewMode = 'list'">
+                <mat-icon>arrow_back</mat-icon> All Trips
+            </button>
+            <div class="spacer"></div>
+            <button mat-stroked-button color="primary" (click)="editTrip(activeTrip)">
+                <mat-icon>edit</mat-icon> Edit Details
+            </button>
+        </div>
+
+        <app-trip-overview [trip]="activeTrip" (edit)="viewMode = 'edit'"></app-trip-overview>
+
+        <div class="dashboard-grid">
+            <div class="main-column">
+                <app-destination-selector (destinationSelected)="onDestinationSelected($event)"
+                    (destinationRemoved)="onDestinationSelected($event)"></app-destination-selector>
+
+                <app-itinerary-builder [trip]="activeTrip" (addActivity)="onAddActivity($event)"
+                    (removeActivity)="removeActivity($event)"
+                    (reorderActivities)="reorderActivities($event)"></app-itinerary-builder>
+            </div>
+
+            <div class="side-column">
+                <app-budget-tracker [trip]="activeTrip"></app-budget-tracker>
+
+                <!-- Accommodations -->
+                <div class="section-card glass-card">
+                    <div class="section-header">
+                        <h3>Accommodations</h3>
+                        <button mat-icon-button (click)="showAccommodationForm = !showAccommodationForm">
+                            <mat-icon>{{ showAccommodationForm ? 'close' : 'add' }}</mat-icon>
+                        </button>
+                    </div>
+                    <app-accommodation-form *ngIf="showAccommodationForm" (save)="saveAccommodation($event)"
+                        (cancel)="showAccommodationForm = false"></app-accommodation-form>
+
+                    <div class="item-list">
+                        <div *ngFor="let acc of activeTrip.accommodations" class="list-item">
+                            <mat-icon color="primary">hotel</mat-icon>
+                            <div class="item-info">
+                                <strong>{{ acc.hotelName }}</strong>
+                                <span>{{ acc.checkInDate | date:'MMM d' }} - {{ acc.checkOutDate | date:'MMM d'
+                                    }}</span>
+                            </div>
+                            <span class="cost">{{ acc.cost | currency }}</span>
+                        </div>
+                    </div>
+                    <p *ngIf="!activeTrip.accommodations.length && !showAccommodationForm" class="empty-note">No
+                        accommodations added</p>
+                </div>
+
+                <!-- Transportation -->
+                <div class="section-card glass-card">
+                    <div class="section-header">
+                        <h3>Transportation</h3>
+                        <button mat-icon-button (click)="showTransportationForm = !showTransportationForm">
+                            <mat-icon>{{ showTransportationForm ? 'close' : 'add' }}</mat-icon>
+                        </button>
+                    </div>
+                    <app-transportation-form *ngIf="showTransportationForm" (save)="saveTransportation($event)"
+                        (cancel)="showTransportationForm = false"></app-transportation-form>
+
+                    <div class="item-list">
+                        <div *ngFor="let trans of activeTrip.transportation" class="list-item">
+                            <mat-icon color="accent">{{ trans.type === 'Flight' ? 'flight' : 'directions_car'
+                                }}</mat-icon>
+                            <div class="item-info">
+                                <strong>{{ trans.type }}: {{ trans.departureLocation }} to {{ trans.arrivalLocation
+                                    }}</strong>
+                                <span>{{ trans.departureTime | date:'MMM d, h:mm a' }}</span>
+                            </div>
+                            <span class="cost">{{ trans.cost | currency }}</span>
+                        </div>
+                    </div>
+                    <p *ngIf="!activeTrip.transportation.length && !showTransportationForm" class="empty-note">No
+                        transportation added</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay Forms (Activity) -->
+    <div class="overlay" *ngIf="showActivityForm">
+        <div class="overlay-content">
+            <app-activity-form [day]="selectedDayForActivity || 1" [destination]="activeTrip?.destination || ''"
+                (save)="saveActivity($event)" (cancel)="showActivityForm = false"></app-activity-form>
+        </div>
+    </div>
+</div>

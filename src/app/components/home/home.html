@@ -1,0 +1,201 @@
+<div class="home-wrapper">
+    <!-- 1. Full Height Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background-container">
+            @for (img of backgroundImages; track img; let i = $index) {
+            <div class="hero-bg-layer" [style.background-image]="'url(' + img + ')'"
+                [class.active]="i === currentImageIndex()">
+            </div>
+            }
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+            <h1 class="reveal-text">Explore the World <br> with Vantora</h1>
+            <p class="reveal-text delay-1">"Your Smart Travel Companion" — Hand-curated travel experiences for the
+                modern explorer.</p>
+
+            <div class="hero-search-wrapper reveal-text delay-2">
+                <div class="search-pill">
+                    <mat-icon>search</mat-icon>
+                    <input type="text" [(ngModel)]="searchCity" (keyup.enter)="getWeather()"
+                        placeholder="Search destinations...">
+                    <button class="btn-search" (click)="getWeather()" [disabled]="loading">
+                        <span *ngIf="!loading">Search</span>
+                        <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+                    </button>
+                </div>
+
+                @if (error) {
+                <p class="error-msg">{{ error }}</p>
+                }
+            </div>
+
+            <!-- Integrated Weather Result (Subtle Glassmorphism) -->
+            @if (weatherData) {
+            <div class="weather-result-overlay reveal-text">
+                <div class="weather-brief">
+                    <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'"
+                        [alt]="weatherData.weather[0].description">
+                    <div class="weather-text">
+                        <span class="city-name">{{ weatherData.name }}</span>
+                        <span class="temp">{{ weatherData.main.temp | number:'1.0-0' }}°C • {{
+                            weatherData.weather[0].description }}</span>
+                    </div>
+                </div>
+                <button mat-flat-button color="primary" (click)="explore(weatherData.name)">Explore Now</button>
+            </div>
+            }
+        </div>
+
+    </section>
+
+    <!-- 2. Popular Destinations Section -->
+    <section class="section popular-destinations reveal">
+        <div class="container">
+            <div class="section-header carousel-header">
+                <div class="header-text">
+                    <h2>Popular Destinations</h2>
+                    <p>Most visited and loved locations across the globe.</p>
+                </div>
+                <div class="carousel-nav">
+                    <button class="nav-btn prev" (click)="scrollCarousel('left', carouselDest)" aria-label="Previous">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button class="nav-btn next" (click)="scrollCarousel('right', carouselDest)" aria-label="Next">
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="carousel-container" #carouselDest>
+                <div class="custom-grid carousel-track">
+                    @for (dest of featuredDestinations; track dest.city) {
+                    <div class="modern-card" (click)="explore(dest.city)">
+                        <div class="card-image-wrapper">
+                            <img [src]="dest.image" [alt]="dest.city">
+                            <div class="card-overlay"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3>{{ dest.city }}</h3>
+                            <p>{{ dest.description }}</p>
+                            <span class="explore-link">Explore <mat-icon>arrow_forward</mat-icon></span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <button mat-stroked-button color="primary" class="btn-view-all" routerLink="/destinations">View All
+                    Destinations</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Travel Inspiration (Categories) -->
+    <section class="section inspiration reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2>Travel Inspiration</h2>
+                <p>Find your next trip by category or interest.</p>
+            </div>
+            <div class="category-grid">
+                @for (cat of categories; track cat.name) {
+                <div class="category-card" (click)="navigateToCategory(cat.name)" style="cursor: pointer;">
+                    <img [src]="cat.image" [alt]="cat.name">
+                    <div class="cat-overlay">
+                        <mat-icon>{{ cat.icon }}</mat-icon>
+                        <span>{{ cat.name }}</span>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Trending Places (Light Background) -->
+    <section class="section trending-places bg-light reveal">
+        <div class="container">
+            <div class="section-header carousel-header">
+                <div class="header-text">
+                    <h2>Trending Places</h2>
+                    <p>Rising stars in the world of travel this season.</p>
+                </div>
+                <div class="carousel-nav">
+                    <button class="nav-btn prev" (click)="scrollCarousel('left', carouselTrend)" aria-label="Previous">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button class="nav-btn next" (click)="scrollCarousel('right', carouselTrend)" aria-label="Next">
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="carousel-container" #carouselTrend>
+                <div class="trending-track">
+                    @for (dest of trendingDestinations; track dest.city) {
+                    <div class="trending-card" (click)="explore(dest.city)">
+                        <img [src]="dest.image" [alt]="dest.city">
+                        <div class="trend-info">
+                            <h4>{{ dest.city }}</h4>
+                            <div class="trend-meta">
+                                <span class="rating"><mat-icon>star</mat-icon> {{ dest.rating }}</span>
+                                <span class="dest-country">{{ dest.country }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Featured Experience -->
+    <section class="featured-experience reveal"
+        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600');">
+        <div class="container text-center">
+            <h3>Ready for an Unforgettable Adventure?</h3>
+            <p>Join thousands of travelers who have found their dream vacation through us.</p>
+            <button mat-flat-button color="accent" class="btn-large" routerLink="/planner">Plan Your Trip Now</button>
+        </div>
+    </section>
+
+    <!-- 6. Professional Footer -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="assets/images/vantora-logo.png" alt="Vantora Logo" class="footer-brand-logo">
+                    <div class="footer-brand-group">
+                        <span class="footer-brand-name">Vantora</span>
+                        <span class="footer-brand-slogan">Your Smart Travel Companion</span>
+                    </div>
+                </div>
+                <p>Vantora — "Your Smart Travel Companion". Discovering the most beautiful and exciting destinations
+                    around the world.</p>
+                <div class="social-links">
+                    <mat-icon>facebook</mat-icon>
+                    <mat-icon>twitter</mat-icon>
+                    <mat-icon>instagram</mat-icon>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a routerLink="/">Home</a></li>
+                    <li><a routerLink="/destinations">Destinations</a></li>
+                    <li><a routerLink="/planner">Trip Planner</a></li>
+                    <li><a routerLink="/login">Member Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p><mat-icon>email</mat-icon> Vantora&#64;travelguide.com</p>
+                <p><mat-icon>phone</mat-icon> +1 (555) 123-4567</p>
+                <p><mat-icon>location_on</mat-icon> 123 Travel Way, Adventure City</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 Vantora Platform. All rights reserved. Your Smart Travel Companion.</p>
+            </div>
+        </div>
+    </footer>
+</div>

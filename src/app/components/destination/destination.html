@@ -1,0 +1,236 @@
+<div *ngIf="loading" class="global-loader">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="destination-wrapper" *ngIf="city && destData">
+
+    <!-- 1. Hero Section -->
+    <div class="hero"
+        [style.background-image]="'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(' + destData.heroImage + ')'">
+        <div class="hero-content">
+            <h1 class="city-name">{{ city }}</h1>
+            <p class="tagline">{{ destData.tagline }}</p>
+        </div>
+    </div>
+
+    <div class="container main-grid">
+        <div class="main-column">
+
+            <!-- 2. Overview Section -->
+            <section class="overview-section">
+                <h2>Overview</h2>
+                <p class="desc">{{ destData.overview.description }}</p>
+
+                <div class="quick-facts">
+                    <div class="fact">
+                        <mat-icon color="primary">wb_sunny</mat-icon>
+                        <div>
+                            <strong>Best Time</strong>
+                            <span>{{ destData.overview.bestTime }}</span>
+                        </div>
+                    </div>
+                    <div class="fact">
+                        <mat-icon color="primary">attach_money</mat-icon>
+                        <div>
+                            <strong>Currency</strong>
+                            <span>{{ destData.overview.currency }}</span>
+                        </div>
+                    </div>
+                    <div class="fact">
+                        <mat-icon color="primary">chat_bubble</mat-icon>
+                        <div>
+                            <strong>Language</strong>
+                            <span>{{ destData.overview.language }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Top Attractions -->
+            <section class="attractions-section" *ngIf="destData.attractions && destData.attractions.length > 0">
+                <h2>Top Attractions</h2>
+                <div class="attractions-grid">
+                    <mat-card *ngFor="let attr of destData.attractions" class="attraction-card shadow-sm h-100"
+                        style="cursor: pointer;"
+                        [routerLink]="['/destination', city, 'attraction', formatSlug(attr.name)]">
+                        <div class="img-container">
+                            <img [src]="attr.image" [alt]="attr.name" appFallbackImage
+                                [appFallbackImage]="'/assets/images/travel-placeholder.jpg'" loading="lazy">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header-row">
+                                <h3>{{ attr.name }}</h3>
+                                <div class="rating-badge">
+                                    <mat-icon>star</mat-icon>
+                                    <span>{{ attr.rating }}</span>
+                                </div>
+                            </div>
+                            <p>{{ attr.description }}</p>
+                        </div>
+                    </mat-card>
+                </div>
+            </section>
+
+            <!-- 6. Image Gallery (Unsplash) -->
+            <section class="gallery-section" *ngIf="images.length > 0">
+                <h2>Captured Moments</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item" *ngFor="let img of images.slice(0, 8)">
+                        <img [src]="img.urls.small" [alt]="img.alt_description || 'City image'" appFallbackImage
+                            loading="lazy">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+                <h2>Community Board</h2>
+
+                <div class="comment-input" *ngIf="authService.user$ | async; else loginToComment">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Share your thoughts about {{ city }}...</mat-label>
+                        <textarea matInput [(ngModel)]="newComment" rows="3"></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" (click)="postComment()"
+                        [disabled]="!newComment.trim()">Post Comment</button>
+                </div>
+
+                <ng-template #loginToComment>
+                    <div class="login-prompt">
+                        <p>Want to join the conversation? <a routerLink="/login">Login</a> to share your travel
+                            experience.</p>
+                    </div>
+                </ng-template>
+
+                <div class="comments-list" *ngIf="comments$ | async as comments">
+                    <mat-card *ngFor="let comment of comments.slice(0, showAllComments ? comments.length : 3)"
+                        class="comment-card shadow-sm">
+                        <div class="comment-body">
+                            <div class="comment-header">
+                                <span class="user-name">{{ comment.userName }}</span>
+                                <div class="header-right">
+                                    <span class="comment-date">{{ comment.timestamp?.toDate() | date:'MMM d, y, h:mm a'
+                                        }}</span>
+                                    <button mat-icon-button color="primary" class="edit-btn"
+                                        *ngIf="(authService.user$ | async)?.uid === comment.userId"
+                                        (click)="startEdit(comment)">
+                                        <mat-icon>edit_calendar</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="warn" class="delete-btn"
+                                        *ngIf="(authService.user$ | async)?.uid === comment.userId"
+                                        (click)="deleteComment(comment.id)">
+                                        <mat-icon>delete_outline</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="editingCommentId !== comment.id">
+                                <p class="comment-text">{{ comment.message }}</p>
+                            </div>
+                            <div *ngIf="editingCommentId === comment.id" class="edit-form">
+                                <mat-form-field appearance="outline" class="full-width">
+                                    <textarea matInput [(ngModel)]="editCommentContent" rows="3"></textarea>
+                                </mat-form-field>
+                                <div class="edit-actions">
+                                    <button mat-button (click)="cancelEdit()">Cancel</button>
+                                    <button mat-raised-button color="primary" (click)="saveEdit()"
+                                        [disabled]="!editCommentContent.trim()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+
+                    <div class="comments-actions" *ngIf="comments.length > 3">
+                        <button mat-button color="primary" (click)="toggleComments()">
+                            {{ showAllComments ? 'Show less' : 'View all ' + comments.length + ' comments' }}
+                        </button>
+                    </div>
+
+                    <div *ngIf="comments.length === 0" class="no-comments">
+                        <p>No comments yet. Be the first to review!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="sidebar-column">
+            <!-- 5. Weather Section (OpenWeather) -->
+            <mat-card class="weather-card compact-card" *ngIf="weatherData">
+                <mat-card-content>
+                    <div class="w-main">
+                        <div class="w-left">
+                            <span class="w-label">Current Weather</span>
+                            <div class="w-temp">{{ weatherData.main.temp | number:'1.0-0' }}°C</div>
+                            <div class="w-desc">{{ weatherData.weather[0].main }}</div>
+                        </div>
+                        <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '.png'"
+                            alt="icon" class="w-icon">
+                    </div>
+                    <div class="w-footer">
+                        <span>H: {{ weatherData.main.humidity }}%</span>
+                        <span>W: {{ weatherData.wind.speed }}m/s</span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- 4. Things To Do -->
+            <mat-card class="sidebar-card compact-card">
+                <mat-card-header>
+                    <mat-card-title>Things To Do</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <ul class="compact-list">
+                        <li *ngFor="let item of destData.thingsToDo">
+                            <mat-icon>check</mat-icon>
+                            <span>{{ item }}</span>
+                        </li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- 8. Travel Tips -->
+            <mat-card class="sidebar-card compact-card tips-card">
+                <mat-card-header>
+                    <mat-card-title>Travel Tips</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="compact-tip" *ngFor="let tip of [
+                    {icon: 'security', label: 'Safety', value: destData.travelTips.safety},
+                    {icon: 'directions_transit', label: 'Transport', value: destData.travelTips.transport},
+                    {icon: 'co_present', label: 'Etiquette', value: destData.travelTips.etiquette}
+                ]">
+                        <mat-icon>{{ tip.icon }}</mat-icon>
+                        <p><strong>{{ tip.label }}:</strong> {{ tip.value }}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- 7. Map Section -->
+            <mat-card class="sidebar-card map-card" *ngIf="safeMapUrl">
+                <mat-card-content style="padding: 0; min-height: 250px;">
+                    <iframe [src]="safeMapUrl" width="100%" height="250" style="border:0;" allowfullscreen=""
+                        loading="lazy">
+                    </iframe>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- 9. Nearby Destinations -->
+            <mat-card class="sidebar-card compact-card">
+                <mat-card-header>
+                    <mat-card-title>Nearby Destinations</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="chips-container">
+                        <span class="chip" *ngFor="let near of destData.nearby" [routerLink]="['/destination', near]">{{
+                            near }}</span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+<div class="container empty-state" *ngIf="!loading && (!city || !destData)">
+    <h2>Destination Not Found</h2>
+    <p>Please select a supported destination from the home page (e.g., Paris, Tokyo, New York).</p>
+    <button mat-raised-button color="primary" routerLink="/">Back to Home</button>
+</div>

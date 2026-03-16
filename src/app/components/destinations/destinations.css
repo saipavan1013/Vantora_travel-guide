@@ -1,0 +1,348 @@
+.destinations-wrapper {
+    background-color: var(--bg-color);
+    min-height: 100vh;
+    padding-bottom: 4rem;
+}
+
+/* 1. Hero Section */
+.hero {
+    height: 40vh;
+    min-height: 350px;
+    background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* 2. Search & Filter Bar */
+.filter-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: -3rem;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.search-bar {
+    width: 100%;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-label {
+    font-weight: 600;
+    color: #555;
+    min-width: 90px;
+}
+
+/* Common Section Styles */
+section {
+    margin-top: 4rem;
+}
+
+section h2 {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+/* Card Styling (Shared across 3 & 5) */
+.destination-card {
+    border-radius: 20px !important;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: none !important;
+    background: white;
+}
+
+.destination-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+.card-image-wrapper {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+}
+
+.card-image-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    margin: 0 !important;
+    transition: transform 0.6s ease;
+}
+
+.destination-card:hover .card-image-wrapper img {
+    transform: scale(1.1);
+}
+
+.overlay-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    backdrop-filter: blur(4px);
+}
+
+.trending-badge {
+    background: rgba(255, 64, 129, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.trending-badge mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.category-badge {
+    background: rgba(63, 81, 181, 0.85);
+}
+
+.loc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.loc-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.loc-header .country {
+    color: #777;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.desc {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    /* Pushes meta info to bottom */
+}
+
+.meta-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: auto;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    color: #ffa000;
+}
+
+.cost {
+    font-weight: 700;
+    color: #4caf50;
+}
+
+.full-width {
+    width: 100%;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+}
+
+mat-card-actions {
+    padding: 1rem !important;
+    padding-top: 0 !important;
+}
+
+/* 5. Trending Grid layout */
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.trending-card .card-image-wrapper {
+    height: 280px;
+    /* Larger images for trending */
+}
+
+/* 3. Popular Grid layout */
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 16px;
+    border: 2px dashed #ddd;
+}
+
+/* 6. Travel Categories Bottom Section */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.cat-card {
+    height: 180px;
+    border-radius: 16px !important;
+    overflow: hidden;
+    cursor: pointer;
+    background-size: cover !important;
+    background-position: center !important;
+    transition: transform 0.3s ease;
+}
+
+.cat-card:hover {
+    transform: scale(1.03);
+}
+
+.cat-overlay {
+    background: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.cat-card:hover .cat-overlay {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.cat-overlay mat-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cat-overlay h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Backgrounds for categories */
+.bg-beach {
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800');
+}
+
+.bg-mountain {
+    background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800');
+}
+
+.bg-culture {
+    background: url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=800');
+}
+
+.bg-city {
+    background: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=800');
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .destinations-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+
+    .trending-grid,
+    .destinations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .trending-grid,
+    .destinations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}

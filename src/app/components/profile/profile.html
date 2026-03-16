@@ -1,0 +1,70 @@
+<div class="profile-container">
+    <div class="profile-card mat-elevation-z4">
+        <div class="profile-header">
+            <div class="profile-avatar-large">
+                {{ (user$ | async)?.displayName?.[0]?.toUpperCase() || (user$ | async)?.email?.[0]?.toUpperCase() || '?' }}
+            </div>
+            <div class="profile-title">
+                <h1>User Profile</h1>
+                <p>Personal account information</p>
+            </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="profile-content" *ngIf="user$ | async as user">
+            <div class="info-group">
+                <mat-icon color="primary">person</mat-icon>
+                <div class="info-details">
+                    <label>Full Name</label>
+                    <p>{{ user.displayName || 'Not provided' }}</p>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <mat-icon color="primary">email</mat-icon>
+                <div class="info-details">
+                    <label>Email Address</label>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <mat-icon color="primary">verified_user</mat-icon>
+                <div class="info-details">
+                    <label>Account Status</label>
+                    <p class="status-badge" [class.verified]="user.emailVerified">
+                        {{ user.emailVerified ? 'Verified' : 'Unverified' }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <mat-icon color="primary">event</mat-icon>
+                <div class="info-details">
+                    <label>Member Since</label>
+                    <p>{{ (user.metadata.creationTime | date:'longDate') || 'N/A' }}</p>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <mat-icon color="primary">login</mat-icon>
+                <div class="info-details">
+                    <label>Last Sign In</label>
+                    <p>{{ (user.metadata.lastSignInTime | date:'medium') || 'N/A' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <button mat-raised-button color="primary" (click)="editProfile()">
+                <mat-icon>edit</mat-icon>
+                Edit Profile
+            </button>
+            <button mat-stroked-button color="warn" (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                Logout
+            </button>
+        </div>
+    </div>
+</div>

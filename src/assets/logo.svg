@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80" fill="none">
+  <defs>
+    <!-- Premium Gradient Definitions -->
+    <linearGradient id="mainTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#14B8A6" />
+    </linearGradient>
+    <linearGradient id="darkNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#083344" />
+      <stop offset="100%" stop-color="#041E32" />
+    </linearGradient>
+    <linearGradient id="wingMid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D9488" />
+      <stop offset="100%" stop-color="#065F46" />
+    </linearGradient>
+  </defs>
+
+  <!-- THE V-BASE (3D Effect) -->
+  <!-- Left Side (Shadowed) -->
+  <path d="M 50 75 L 20 28 L 38 32 L 50 55 Z" fill="url(#darkNavy)" />
+  <!-- Right Side (Highlighted) -->
+  <path d="M 50 75 L 68 45 L 82 35 L 50 55 Z" fill="url(#mainTeal)" />
+
+  <!-- THE BIRD SHAPE -->
+  <!-- Right Swing (Body & Head) -->
+  <path d="M 50 55 L 65 30 L 85 10 L 78 28 L 68 45 Z" fill="#14B8A6" />
+  <!-- Head Detail (Beak area) -->
+  <path d="M 85 10 L 95 10 L 85 20 Z" fill="#2DD4BF" />
+
+  <!-- THE WINGS (Left fanning) -->
+  <!-- Topmost Wing -->
+  <path d="M 50 45 L 35 15 L 55 28 L 60 35 Z" fill="#2DD4BF" />
+  <!-- Middle Wing -->
+  <path d="M 45 42 L 25 22 L 48 35 L 52 40 Z" fill="#0D9488" />
+  <!-- Lower Wing -->
+  <path d="M 40 45 L 20 35 L 42 42 L 45 46 Z" fill="#065F46" />
+
+</svg>

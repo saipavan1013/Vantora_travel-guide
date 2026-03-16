@@ -1,0 +1,689 @@
+.home-wrapper {
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* 1. Hero Section overhauled */
+.hero-section {
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+}
+
+.hero-background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-bg-layer.active {
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -2px;
+}
+
+.hero-content p {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+}
+
+/* Glassmorphism Search Pill */
+.hero-search-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.search-pill {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.search-pill:focus-within {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.search-pill mat-icon {
+    opacity: 0.7;
+}
+
+.search-pill input {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    width: 100%;
+    outline: none;
+}
+
+.search-pill input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-search {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 40px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 110px;
+}
+
+.btn-search:hover {
+    background: #ff5c97;
+    transform: scale(1.05);
+}
+
+.btn-search:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.hero-content p.error-msg {
+    margin-top: 1.5rem;
+    color: #ffcccc;
+    /* Add a subtle red tint to make it look like an error but keeping it elegant */
+    font-weight: 500;
+}
+
+.weather-result-overlay {
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: left;
+}
+
+.weather-brief {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.weather-brief img {
+    width: 60px;
+    height: 60px;
+}
+
+.weather-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.temp {
+    opacity: 0.8;
+}
+
+
+/* 2. Section Styling */
+.section {
+    padding: 60px 0;
+}
+
+.carousel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.carousel-header .header-text {
+    flex: 1;
+}
+
+.carousel-header h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.carousel-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: #1a202c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: #1a202c;
+    color: white;
+    border-color: #1a202c;
+    transform: scale(1.1);
+}
+
+.nav-btn mat-icon {
+    font-size: 24px;
+}
+
+.carousel-container {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none;
+    /* Hide scrollbar for IE/Edge */
+    padding: 20px 0;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar for Chrome/Safari */
+}
+
+.carousel-track {
+    display: flex;
+    gap: 2.5rem;
+    width: max-content;
+}
+
+.section-header {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.bg-light {
+    background-color: #f8fafc;
+}
+
+/* Popular Destinations cards */
+.custom-grid {
+    display: flex;
+    /* Changed from grid to flex for horizontal layout */
+    gap: 2.5rem;
+}
+
+.modern-card {
+    width: 400px;
+    /* Fixed width for carousel items */
+    flex-shrink: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    height: 500px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.card-image-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 60%);
+}
+
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    color: white;
+    transition: transform 0.4s ease;
+}
+
+.card-content h3 {
+    font-size: 1.75rem;
+    margin: 0 0 0.5rem;
+}
+
+.card-content p {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.explore-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.modern-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+}
+
+.modern-card:hover .card-image-wrapper img {
+    transform: scale(1.1);
+}
+
+.modern-card:hover .explore-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 3. Category Grid */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+}
+
+.category-card {
+    height: 180px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.category-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.cat-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    gap: 0.75rem;
+    transition: background 0.3s;
+}
+
+.cat-overlay mat-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.category-card:hover img {
+    transform: scale(1.15);
+}
+
+.category-card:hover .cat-overlay {
+    background: rgba(var(--primary-color-rgb, 63, 81, 181), 0.6);
+}
+
+/* 4. Trending Grid overhauled for Carousel */
+.trending-track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+}
+
+.trending-card {
+    width: 300px;
+    /* Fixed width for carousel */
+    flex-shrink: 0;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.trending-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.trend-info {
+    padding: 1.25rem;
+}
+
+.trend-info h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+}
+
+.trend-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.trend-meta .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #f59e0b;
+    font-weight: 700;
+}
+
+.dest-country {
+    color: #94a3b8;
+}
+
+.trending-card:hover {
+    transform: translateY(-8px);
+}
+
+/* 5. Featured Experience Section */
+.featured-experience {
+    padding: 15vw 0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    text-align: left;
+}
+
+.featured-experience h3 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+}
+
+.featured-experience p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 0 2.5rem 0;
+    opacity: 0.9;
+}
+
+.btn-large {
+    padding: 1.2rem 3rem !important;
+    border-radius: 50px !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+}
+
+/* 6. Professional Footer */
+.main-footer {
+    background: #1e293b;
+    color: #94a3b8;
+    padding: 5rem 0 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    padding-bottom: 5rem;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.footer-brand-logo {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
+
+.footer-brand-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    letter-spacing: -1px;
+    font-family: 'Outfit', sans-serif;
+    line-height: 1;
+}
+
+.footer-brand-slogan {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.social-links {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links mat-icon {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.social-links mat-icon:hover {
+    color: white;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links ul li a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links ul li a:hover {
+    color: white;
+}
+
+.footer-contact p {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.footer-bottom {
+    background: #0f172a;
+    padding: 1.5rem 0;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Scroll Reveal Base */
+.reveal-text {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideInLeft 0.8s forwards ease-out;
+}
+
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Scroll Reveal Base */
+.reveal h2,
+.reveal h3 {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active h2,
+.reveal.active h3 {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+    .custom-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .trending-track {
+        gap: 1.5rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .custom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trending-track {
+        gap: 1rem;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}

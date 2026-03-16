@@ -1,0 +1,135 @@
+<div class="destinations-wrapper">
+    <!-- 1. Hero Section -->
+    <div class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Explore Destinations</h1>
+            <p>Discover amazing places around the world</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container main-content">
+
+        <!-- 2. Search and Filter Bar -->
+        <section class="filter-section mat-elevation-z2">
+            <mat-form-field appearance="outline" class="search-bar">
+                <mat-label>Search city or country...</mat-label>
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput [(ngModel)]="searchTerm" (keyup)="applyFilters()" placeholder="Paris, Japan...">
+            </mat-form-field>
+
+            <div class="filter-group">
+                <span class="filter-label">Continent:</span>
+                <mat-chip-listbox aria-label="Continent selection">
+                    <mat-chip-option *ngFor="let cont of continents" [selected]="selectedContinent === cont"
+                        (click)="setContinent(cont)" color="primary">
+                        {{ cont }}
+                    </mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">Travel Type:</span>
+                <mat-chip-listbox aria-label="Category selection">
+                    <mat-chip-option *ngFor="let cat of categories" [selected]="selectedCategory === cat"
+                        (click)="setCategory(cat)" color="accent">
+                        {{ cat }}
+                    </mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+        </section>
+
+        <!-- 5. Trending Destinations Section -->
+        <section class="trending-section"
+            *ngIf="searchTerm === '' && selectedContinent === 'All' && selectedCategory === 'All'">
+            <h2>Trending Destinations</h2>
+            <div class="trending-grid">
+                <mat-card *ngFor="let dest of trendingDestinations" class="trending-card destination-card">
+                    <div class="card-image-wrapper">
+                        <img mat-card-image [src]="dest.image" [alt]="dest.city" appFallbackImage loading="lazy">
+                        <div class="overlay-badge trending-badge">
+                            <mat-icon>local_fire_department</mat-icon> Hot
+                        </div>
+                    </div>
+                    <mat-card-content>
+                        <div class="loc-header">
+                            <h3>{{ dest.city }}</h3>
+                            <span class="country">{{ dest.country }}</span>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" class="full-width"
+                            [routerLink]="['/destination', dest.city]">Explore</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </section>
+
+        <!-- 3. Popular Destinations Grid -->
+        <section class="all-destinations-section">
+            <h2 *ngIf="filteredDestinations.length === allDestinations.length">Popular Destinations</h2>
+            <h2 *ngIf="filteredDestinations.length !== allDestinations.length">Search Results
+                ({{filteredDestinations.length}})</h2>
+
+            <div class="destinations-grid">
+                <mat-card *ngFor="let dest of filteredDestinations" class="destination-card">
+                    <div class="card-image-wrapper">
+                        <img mat-card-image [src]="dest.image" [alt]="dest.city" appFallbackImage loading="lazy">
+                        <div class="overlay-badge category-badge">{{ dest.category }}</div>
+                    </div>
+                    <mat-card-content>
+                        <div class="loc-header">
+                            <h3>{{ dest.city }}</h3>
+                            <span class="country">{{ dest.country }}</span>
+                        </div>
+                        <p class="desc">{{ dest.description }}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-stroked-button color="primary" class="full-width"
+                            [routerLink]="['/destination', dest.city]">Explore {{ dest.city }}</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+
+            <div *ngIf="filteredDestinations.length === 0" class="no-results">
+                <h3>No destinations found.</h3>
+                <p>Try adjusting your search or filters to discover amazing places.</p>
+                <button mat-flat-button color="primary"
+                    (click)="searchTerm=''; setContinent('All'); setCategory('All')">Clear Filters</button>
+            </div>
+        </section>
+
+        <!-- 6. Travel Categories Bottom Section -->
+        <section class="categories-section">
+            <h2>Travel Categories</h2>
+            <div class="categories-grid">
+                <mat-card class="cat-card bg-beach" (click)="setCategory('Beach'); scrollToTop()">
+                    <div class="cat-overlay">
+                        <mat-icon>beach_access</mat-icon>
+                        <h3>Beach</h3>
+                    </div>
+                </mat-card>
+                <mat-card class="cat-card bg-mountain" (click)="setCategory('Nature'); scrollToTop()">
+                    <div class="cat-overlay">
+                        <mat-icon>landscape</mat-icon>
+                        <h3>Mountain</h3>
+                    </div>
+                </mat-card>
+                <mat-card class="cat-card bg-culture" (click)="setCategory('Culture'); scrollToTop()">
+                    <div class="cat-overlay">
+                        <mat-icon>account_balance</mat-icon>
+                        <h3>Culture</h3>
+                    </div>
+                </mat-card>
+                <mat-card class="cat-card bg-city" (click)="setCategory('City'); scrollToTop()">
+                    <div class="cat-overlay">
+                        <mat-icon>location_city</mat-icon>
+                        <h3>City</h3>
+                    </div>
+                </mat-card>
+            </div>
+        </section>
+
+    </div>
+</div>
